@@ -1,18 +1,18 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Clone repository
+## if you are installing this project for first time do step 1 and 2
+
+## Step1. Clone repository
 
 git clone https://github.com/vicmg11/movemedical.git
 
-## First Time run:
+## Step 2 install dependencies
 
 npm install
 
-## Available Scripts
+### Then in the project directory, you can run:
 
-In the project directory, you can run:
-
-### `npm start`
+npm start
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
