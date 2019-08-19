@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import 'semantic-ui-css/semantic.min.css';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Popup  } from 'semantic-ui-react';
 
 const Logout = styled.div`
 	font-size: 1rem;
@@ -10,13 +10,13 @@ const Logout = styled.div`
 	cursor: pointer;
 	color: #2c3e50;
 	position: fixed;
-	right: 4px;
+	right: 34px;
 	top: 4px;
 `;
 
 const Signout = (props) => (
 	<Logout className="logout" onClick={() => props.handleAuth(false)}>
-		<Icon name="sign out alternate" />
+		<Popup content='Logout' trigger={<Icon name='sign out alternate' />} />
 	</Logout>
 );
 
