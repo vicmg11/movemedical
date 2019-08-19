@@ -9,9 +9,7 @@ class Form extends Component {
 		date: this.props.appointment.date,
 		time: this.props.appointment.time,
 		location: this.props.appointment.location,
-		description: this.props.appointment.description,
-		dateErr: false,
-		timeErr: false
+		description: this.props.appointment.description
 	};
 
 	handleChange = (e) => {
@@ -26,17 +24,16 @@ class Form extends Component {
 	};
 
 	updateAppointment = () => {
+		//validate date and time fields are not in the past
 		if (isValidDate(this.state.date)) {
-			this.setState({ date: this.props.appointment.date, dateErr: true });
-			return;
+			alert('Appointment date cannot be in the past/or bad format!');
+		} else if (isValidTime(this.state.date, this.state.time)) {
+			alert('Appointment time cannot be in the past/or bad format!');
+		} else {
+			//Update records
+			this.props.dataUpdate(this.state, this.props.index);
+			this.props.onClose();
 		}
-		if (isValidTime(this.state.date, this.state.time)) {
-			this.setState({ time: this.props.appointment.time, timeErr: true });
-			return;
-		}
-	  //Update records
-		this.props.dataUpdate(this.state, this.props.index);
-		this.props.onClose();
 	};
 
 	render() {
@@ -52,9 +49,6 @@ class Form extends Component {
 				{/* <div className="title">Update Appointment</div> */}
 				<fieldset>
 					<label htmlFor="date">
-						{this.state.dateErr && (
-							<span className="has-error">Appointment date cannot be in the past!</span>
-						)}
 						<DateInput
 							name="date"
 							placeholder="Appointment Date"
@@ -68,9 +62,6 @@ class Form extends Component {
 					</label>
 
 					<label htmlFor="time">
-						{this.state.timeErr && (
-							<span className="has-error">Appointment time cannot be in the past!</span>
-						)}
 						<TimeInput
 							name="time"
 							placeholder="Appointment Time"

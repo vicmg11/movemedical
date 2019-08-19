@@ -24,12 +24,14 @@ export const isValidTime = (currentDate, time) => {
 	}
 
 	let timeFormat = time.substring(6, 8);
-  let hourFormat = time.substring(0, 2);
-  if (hourFormat === '12' ) { hourFormat = '00'; }
-  let newHour = timeFormat === 'AM' ? hourFormat : 12 + +hourFormat;
+	let hourFormat = time.substring(0, 2);
+	if (hourFormat === '12') {
+		hourFormat = '00';
+	}
+	let newHour = timeFormat === 'AM' ? hourFormat : 12 + +hourFormat;
 	let newTime = newHour + time.substring(2, 5);
 	let compareDate1 = new Date(`${currentDate} ${newTime}`);
-  let compareDate2 = new Date();
+	let compareDate2 = new Date();
 	if (compareDate1 < compareDate2) {
 		return true;
 	}
