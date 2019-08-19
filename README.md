@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Clone repository
+
+git clone https://github.com/vicmg11/movemedical.git
+
 ## Available Scripts
 
 In the project directory, you can run:
