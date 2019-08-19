@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 git clone https://github.com/vicmg11/movemedical.git
 
+## First Time run:
+
+npm install
+
 ## Available Scripts
 
 In the project directory, you can run:
