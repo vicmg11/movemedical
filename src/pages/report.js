@@ -1,9 +1,5 @@
 import React from 'react';
-
-const Report = props => (
-  <div>
-    <h1>Create Report</h1>
-  </div>
-)
+import Appointments from '../components/Appointments';
+const Report = (props) => <Appointments {...props} />;
 
 export default Report;

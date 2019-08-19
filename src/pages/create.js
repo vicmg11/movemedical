@@ -1,10 +1,12 @@
 import React from 'react';
-import Form from '../components/Form';
+import Form from '../components/CreateRecord';
 
-const CreateApp = props => (
-  <div className='form'>
-    <Form />
-  </div>
-)
+function CreateRecord(props) {
+	return (
+		<div className="appt-form">
+			<Form {...props}/>
+		</div>
+	);
+}
 
-export default CreateApp;
+export default CreateRecord;

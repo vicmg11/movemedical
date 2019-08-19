@@ -1,29 +1,35 @@
 import React, { Component } from 'react';
-import Home from '../pages/index';
+import Index from '../pages/index';
+import StyledForm from './styles/Form';
 
 class Login extends Component {
-
 	state = {
 		email: '',
-    password: '',
-    toMenu: false
-  };
-  
+		password: '',
+		authenticated: false
+	};
+
 	saveToState = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-  };
-  
+		const { name, value } = e.target;
+		this.setState({ [name]: value });
+	};
+
+	removeAuthentication = () => {
+		this.setState({ authenticated: false });
+	};
+
 	render() {
-    if (this.state.toMenu === true) {
-      return (<Home />);
-    }
+		//Fake authentication passed all good
+		if (this.state.authenticated) {
+			return <Index handleAuth={this.removeAuthentication} />;
+		}
 		return (
-			<form
+			<StyledForm
 				method="post"
-				className="ui form"
-				onSubmit={ (e) => {
-          e.preventDefault();
-					this.setState({ toMenu: true });
+				className="login-form ui form"
+				onSubmit={(e) => {
+					e.preventDefault();
+					this.setState({ authenticated: true, email: '', password: '' });
 				}}
 			>
 				<fieldset>
@@ -33,6 +39,7 @@ class Login extends Component {
 							type="email"
 							name="email"
 							placeholder="Email"
+							required
 							value={this.state.email}
 							onChange={this.saveToState}
 						/>
@@ -43,6 +50,7 @@ class Login extends Component {
 							type="password"
 							name="password"
 							placeholder="Password"
+							required
 							value={this.state.password}
 							onChange={this.saveToState}
 						/>
@@ -51,7 +59,7 @@ class Login extends Component {
 						Login
 					</button>
 				</fieldset>
-			</form>
+			</StyledForm>
 		);
 	}
 }

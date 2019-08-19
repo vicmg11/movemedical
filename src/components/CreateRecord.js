@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { DateInput, TimeInput } from 'semantic-ui-calendar-react';
 import 'semantic-ui-css/semantic.min.css';
-import moment from 'moment';
+import StyledForm from './styles/Form';
+import { isValidDate, isValidTime} from './library/Utils';
 
 class Form extends Component {
 	state = {
@@ -9,7 +10,8 @@ class Form extends Component {
 		time: '',
 		location: '',
 		description: '',
-		disabled: false
+		dateErr: false,
+		timeErr: false
 	};
 
 	handleChange = (e) => {
@@ -19,54 +21,70 @@ class Form extends Component {
 
 	handleChangeDt = (event, { name, value }) => {
 		if (this.state.hasOwnProperty(name)) {
-			this.setState({ [name]: value });
+			this.setState({ [name]: value, dateErr: false, timeErr: false });
 		}
-  };
-  
-  createAppointment = () => {
-    let isCurrentDate = this.state.date.substring(0, 2) === moment().format('DD');
-    console.log(this.state)
-  }
+	};
+
+	createAppointment = () => {
+
+		if (isValidDate(this.state.date)) {
+			this.setState({ date: '', dateErr: true });
+			return;
+		}
+		if (isValidTime(this.state.date, this.state.time)) {
+			this.setState({ time: '', timeErr: true });
+			return;
+		}
+		
+		this.props.dataInsert(this.state);
+		//initialize state after adding the record
+		this.setState({
+			date: '',
+			time: '',
+			location: '',
+			description: ''
+		});
+	};
 
 	render() {
 		return (
-			<form className="ui form"
+			<StyledForm
+				className="ui form create"
 				onSubmit={(e) => {
-					//this.setState({ disabled: true });
-					// Stop de form from submitting
-					e.preventDefault();
-					// call the mutation
-          //const res = await createVisitor();
-           const res = this.createAppointment()
-					// Router.push({
-					// 	pathname: '/' + visitorType + 's'
-					// });
-        }}
-        >
-				<div className="title">New Appointment</div>
+					e.preventDefault(); // Stop form from submitting
+					this.createAppointment();
+				}}
+			>
+				<div className="title-app">New Appointment</div>
 				<fieldset>
-					<label htmlFor="expectedStartDate">
+					<label htmlFor="date">
+						{this.state.dateErr && (
+							<span className="has-error">Appointment date cannot be in the past/or bad format!</span>
+						)}
 						<DateInput
 							name="date"
 							placeholder="Appointment Date"
-							required
 							value={this.state.date}
-              iconPosition="left"
-              popupPosition="top right"
-              minDate={new Date()}
+							required
+							iconPosition="left"
+							popupPosition="top right"
+							minDate={new Date()}
 							onChange={this.handleChangeDt}
 						/>
 					</label>
 
 					<label htmlFor="time">
+						{this.state.timeErr && (
+							<span className="has-error">Appointment time cannot be in the past/or bad format!</span>
+						)}
 						<TimeInput
 							name="time"
 							placeholder="Appointment Time"
-              required
-              timeFormat="AMPM"
+							timeFormat="AMPM"
 							value={this.state.time}
-              iconPosition="left"
-              popupPosition="top right"
+							required
+							iconPosition="left"
+							popupPosition="top right"
 							onChange={this.handleChangeDt}
 						/>
 					</label>
@@ -95,11 +113,11 @@ class Form extends Component {
 						/>
 					</label>
 
-					<button disabled={this.state.disabled} className="ui positive button" type="submit">
-						Save
+					<button className="ui positive button" type="submit">
+						Add
 					</button>
 				</fieldset>
-			</form>
+			</StyledForm>
 		);
 	}
 }

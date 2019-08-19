@@ -2,11 +2,10 @@ import React from 'react';
 import Home from '../components/Home';
 import CreateRecord from '../pages/create';
 import Report from '../pages/report';
-import Login from '../pages/login';
+import Signout from '../components/Logout';
 
 import { Route, Link, Switch } from 'react-router-dom';
-
-const Nav = () => (
+const Nav = (props) => (
 	<React.Fragment>
 		<ul className="menu">
 			<li>
@@ -15,20 +14,18 @@ const Nav = () => (
 			<li>
 				<Link to="/create">New Appointment</Link>
 			</li>
-      <li>
+			<li>
 				<Link to="/report">Report</Link>
 			</li>
-      <li>
-				<Link to="/login">Logout</Link>
-			</li>
 		</ul>
+    <Signout handleAuth={props.handleAuth} />
+
 		<div className="App-intro">
 			<Switch>
 				<Route exact path="/" component={Home} />
-				<Route path="/create" component={CreateRecord} />
-        <Route path="/report" component={Report} />
-        <Route path="/login" component={Login} />
-			</Switch>
+				<Route path="/create" render={(routeProps) => <CreateRecord {...routeProps} {...props} />} />
+				<Route path="/report" render={(routeProps) => <Report {...routeProps} {...props} />} />
+      </Switch>
 		</div>
 	</React.Fragment>
 );

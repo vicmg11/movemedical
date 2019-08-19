@@ -1,40 +1,23 @@
-import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
+import React from 'react';
 import styled from 'styled-components';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
-import { CURRENT_USER_QUERY } from './User';
 
 const Logout = styled.div`
-  color: ${(props) => props.theme.buttonBlue};
-  font-size: 2rem;
-  position: fixed;
-  top: 10px;
-  right: 28px;
-  z-index: 3;
-  width: 22px;
-  height: 30px; 
-  i {
-    height: 0px;
-  }
+	font-size: 1rem;
+	margin-top: 14px;
+	padding: 0px 12px;
+	cursor: pointer;
+	color: #2c3e50;
+	position: fixed;
+	right: 4px;
+	top: 4px;
 `;
 
-const SIGN_OUT_MUTATION = gql`
-	mutation SIGN_OUT_MUTATION {
-		signout {
-			message
-		}
-	}
-`;
 const Signout = (props) => (
-	<Mutation mutation={SIGN_OUT_MUTATION} refetchQueries={[ { query: CURRENT_USER_QUERY } ]}>
-		{(signout) => (
-			<Logout onClick={signout}>
-				<Icon name="sign out alternate" />
-			</Logout>
-		)}
-	</Mutation>
+	<Logout className="logout" onClick={() => props.handleAuth(false)}>
+		<Icon name="sign out alternate" />
+	</Logout>
 );
 
 export default Signout;
